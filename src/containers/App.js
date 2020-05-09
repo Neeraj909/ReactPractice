@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import './App.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
+import withClass from '../hoc/withClass';
+import classes from './App.css';
+import Aux from '../hoc/Aux'
+import AuthContext from '../context/auth-context';
 
 class App extends Component {
   state = {
@@ -52,20 +55,22 @@ class App extends Component {
         />;
     }
     return (
-      <div className="App">
+      <Aux>
+        <AuthContext.Provider vlaue={{authenticated:this.state.authenticated}}>
         <Cockpit 
         title={this.props.appTitle}
         showPersons={this.state.showPersons}
           persons={this.state.persons}
           clicked={this.toggelPersonHandler} />
         {persons}
-      </div>
+        </AuthContext.Provider>
+      </Aux>
     )
   };
 
 }
 
-export default App;
+export default withClass(App,classes.App);
 
 // state ={
 //   persons:[
